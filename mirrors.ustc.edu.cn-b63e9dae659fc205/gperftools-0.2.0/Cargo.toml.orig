@@ -1,0 +1,21 @@
+[package]
+name = "gperftools"
+version = "0.2.0"
+authors = ["dignifiedquire <dignifiedquire@gmail.com>", "james <LucasJ94@hotmail.co.uk>"]
+
+description = "Bindings to google's gperftools"
+repository = "https://github.com/dignifiedquire/rust-gperftools"
+keywords = ["profiler", "cpuprofiler", "heapprofiler", "memoryprofiler", "gperftools"]
+readme = "README.md"
+license = "BSD-2-Clause"
+
+[dependencies]
+lazy_static = "1.1.0"
+error-chain = "0.12.0"
+
+[features]
+default = []
+heap = []
+
+[build-dependencies]
+pkg-config = "0.3"

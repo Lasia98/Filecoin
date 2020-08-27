@@ -1,0 +1,50 @@
+os:
+  - linux
+  - windows
+sudo: false
+language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+matrix:
+  include:
+    - rust: stable
+      env: CARGOFLAGS="--features serde"
+    - rust: stable
+      env: CARGOFLAGS="--features std"
+    - rust: stable
+      env: CARGOFLAGS="--features std,serde"
+    - rust: stable
+      env: CARGOFLAGS="--features alloc"
+    - rust: nightly
+      env: CARGOFLAGS=--all-features
+
+    - rust: stable
+      os: windows
+      env: CARGOFLAGS="--features serde"
+    - rust: stable
+      os: windows
+      env: CARGOFLAGS="--features std"
+    - rust: stable
+      os: windows
+      env: CARGOFLAGS="--features alloc"
+    - rust: stable
+      os: windows
+      env: CARGOFLAGS="--features std,serde"
+    - rust: nightly
+      os: windows
+      env: CARGOFLAGS=--all-features
+
+    - rust: 1.32.0
+      script:
+        - cargo update
+        - cargo update -p unicode-normalization --precise 0.1.9
+        - cargo update -p criterion --precise 0.3.0
+        - cargo test --features std
+branches:
+  except:
+    - gh-pages
+script:
+  - cargo build --verbose --all-targets $CARGOFLAGS
+  - cargo test --verbose $CARGOFLAGS

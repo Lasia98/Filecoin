@@ -1,0 +1,37 @@
+[package]
+
+name = "prettytable-rs"
+version = "0.8.0"
+description = "A library for printing pretty formatted tables in terminal"
+homepage = "https://github.com/phsym/prettytable-rs"
+repository = "https://github.com/phsym/prettytable-rs"
+documentation = "https://docs.rs/crate/prettytable-rs/"
+readme = "README.md"
+authors = [ "Pierre-Henri Symoneaux" ]
+keywords = ["tab", "table", "format", "pretty", "print"]
+categories = ["command-line-interface"]
+license = "BSD-3-Clause"
+
+[badges]
+appveyor = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
+travis-ci = { repository = "phsym/prettytable-rs", branch = "master" }
+codecov = { repository = "phsym/prettytable-rs", branch = "master", service = "github" }
+
+[features]
+default = ["win_crlf", "csv"]
+win_crlf = []
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[lib]
+name = "prettytable"
+
+[dependencies]
+unicode-width = "^0.1"
+term = "^0.5"
+lazy_static = "1"
+atty = "^0.2"
+encode_unicode = "^0.3"
+csv = { version = "1", optional = true }

@@ -1,0 +1,14 @@
+[package]
+name = "fil_logger"
+description = "A logging library used by Filecoin"
+version = "0.1.1"
+authors = ["Volker Mische <volker.mische@gmail.com>"]
+license = "MIT OR Apache-2.0"
+edition = "2018"
+repository = "https://github.com/filecoin-project/rust-fil-logger"
+readme = "README.md"
+
+[dependencies]
+flexi_logger = "0.14.5"
+log = "0.4.8"
+atty = "0.2.13"

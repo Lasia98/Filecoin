@@ -1,0 +1,20 @@
+[package]
+name = "dialoguer"
+description = "A command line prompting library."
+version = "0.6.2"
+edition = "2018"
+authors = [
+	"Armin Ronacher <armin.ronacher@active-4.com>",
+	"Pavan Kumar Sunkara <pavan.sss1991@gmail.com>"
+]
+keywords = ["cli", "menu", "prompt"]
+license = "MIT"
+homepage = "https://github.com/mitsuhiko/dialoguer"
+repository = "https://github.com/mitsuhiko/dialoguer"
+documentation = "https://docs.rs/dialoguer"
+readme = "README.md"
+
+[dependencies]
+console = "0.11.2"
+lazy_static = "1"
+tempfile = "3"

@@ -1,0 +1,12 @@
+language: rust
+after_success: |
+  [ $TRAVIS_BRANCH = master ] &&
+  [ $TRAVIS_PULL_REQUEST = false ] &&
+  cargo doc --no-deps &&
+  echo "<meta http-equiv=refresh content=0;url=env_proxy/index.html>" > target/doc/index.html &&
+  git clone https://github.com/davisp/ghp-import &&
+  ./ghp-import/ghp_import.py target/doc &&
+  git push -fq https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+env:
+  global:
+    secure: "EQkKmbmh8fhVao6b1uZpbC0r6hzfbRNUZ6Q2U2v9KJJKM+ICjkZHCE/XnAQ7F0BpHsD93CfaYslbuLdSbDor2SslJ4WvwZxDr1Mp2FQFybqgJ0TM+6w2LKEmjIqIRU4it1ZDANI69i+B2CwC1b7yvaS4ejKebW473ZVQrCx9HJe2VuqCueZh0fFDsUH2N1cp7yLZuzz2+w9BudujcLTyvR9JF75cedcCIistRmKnIgFRRnjlK6xnqP4ypBrUrHO/cPVLF2Pl8jmAOR5/H2pP6mOmOxXoPUUWpkoxwqR5OFuYBpbA7wHqAkSg9hpYVgnx52j7p9Atkg6bvxzAg+5ay31cG83MZEvOTLBK1ywQ2l01VcDGnC0PTz/ig3ia2FY0XDIJSdlNy81L74eYlgXdu8vUMNkOU0t8tIFZfmNQWYhudb+xvyY7lIL9lvL7HKqH7/8rqOsS3kcZS4u1HHgQDd9p4fAr+2fNIrW78LoHCdoqKAyAwj5/EyY9iu9zF4Y8yGqMtWhxVHqcK9EDknZySocviH5JTDvfO8NhlBXJJ9C5zxclL3SGvUeNzBZFPqVRV4eciRBXerPHqMUfXPRGIglG/ZjDwmv5QAp22iRnZ0hFfLyzywdEztAxr1o0SK4nKJxWVPQDzNRMu7qa1JeVVjz6Rm9LnJea2KmGZr7q8ow="

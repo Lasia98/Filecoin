@@ -1,0 +1,18 @@
+[package]
+name = "neptune-triton"
+description = "GPU implementation of neptune-compatible Poseidon hashing."
+version = "1.1.1"
+authors = ["porcuquine@gmail.com"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+
+[build-dependencies]
+cc = "1.0"
+
+[features]
+default = ["sequential_c"]
+sequential_c = []
+cuda = []
+opencl = []

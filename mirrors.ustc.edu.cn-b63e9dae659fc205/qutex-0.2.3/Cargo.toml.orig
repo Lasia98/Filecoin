@@ -1,0 +1,25 @@
+[package]
+name = "qutex"
+version = "0.2.3"
+authors = ["Nick Sanders <cogciprocate@gmail.com>"]
+license = "MIT"
+description = """\
+	Synchronization mechanisms that rely on lock-free and other \
+	non-(thread)blocking techniques, such as Rust futures, to guarantee \
+	mutually exclusive or shared exclusive access to data."""
+documentation = "https://docs.rs/qutex"
+homepage = "https://github.com/cogciprocate/qutex"
+repository = "https://github.com/cogciprocate/qutex"
+readme = "README.md"
+keywords = ["futures", "async", "data-structures", "mutex", "lock"]
+categories = ["asynchronous", "concurrency", "data-structures"]
+edition = "2018"
+
+[dependencies]
+crossbeam = "0.7"
+futures = "0.1"
+
+# [dependencies.futures-preview]
+# version = "0.2.2"
+# git = "https://github.com/rust-lang-nursery/futures-rs"
+# branch = "master"
