@@ -4,9 +4,10 @@ use crate::gpu::{
 };
 use ff::Field;
 use log::info;
-use ocl::{Buffer, MemFlags, ProQue, MemMap};
+use ocl::{Buffer, MemFlags, ProQue, MemMap, builders};
 use paired::Engine;
 use std::cmp;
+
 
 // NOTE: Please read `structs.rs` for an explanation for unsafe transmutes of this code!
 
@@ -19,6 +20,7 @@ where
     E: Engine,
 {
     proque: ProQue,
+    //memmap: MemMap<structs::PrimeFieldStruct<E::Fr>>,
     fft_ta_buffer: Buffer<structs::PrimeFieldStruct<E::Fr>>,
     fft_src_buffer: Buffer<structs::PrimeFieldStruct<E::Fr>>,
     fft_dst_buffer: Buffer<structs::PrimeFieldStruct<E::Fr>>,
@@ -63,18 +65,29 @@ where
             .flags(MemFlags::new().read_write())
             .len(LOG2_MAX_ELEMENTS)
             .build()?;
-        let tabuff = Buffer::builder()
+        let tabuff = Buffer::builder() 
             .queue(pq.queue().clone())
             .flags(MemFlags::new().read_write().alloc_host_ptr())
             .len(n)
             .build()?;
-        
+         //map tabuff
+        /*unsafe{
+            let *mut t_memmap = MemMap::new();
+                    .core()
+                    .len()
+                    .unmap_wait_events()
+                    .unmap_event()
+                    .buffer()
+                    .queue()
+             t_memmap = tabuff.map().enq();
+        }*/
 
         info!("FFT: 1 working device(s) selected.");
         info!("FFT: Device 0: {}", pq.device().name()?);
 
         Ok(FFTKernel {
             proque: pq,
+            //memmap: t_memmap,
             fft_ta_buffer: tabuff,
             fft_src_buffer: srcbuff,
             fft_dst_buffer: dstbuff,
@@ -180,10 +193,17 @@ where
         //self.fft_ta_buffer.write(&*ta);
 
         unsafe{
-            let mut ta_ptr = self.fft_ta_buffer.map().enq()as_ptr();
+            //let mut ta_ptr = self.fft_ta_buffer.map().enq().as_ptr();
+            //let memmap = self.fft_ta_buffer.map().enq();
+            //get the ptr of tabuffer after mapping
+            //let mut ta_ptr = self.memmap.as_ptr(); 
+            let t_memmap = tabuff.map().enq()?;
+            let ta_ptr = t_memmap.as_ptr();
+             //copy data from ta to tabuffer
+            std::ptr::copy(&*ta, ta_ptr, (std::mem:: size_of:: <structs::PrimeFieldStruct<E::Fr>>) * self.fft_src_buffer.len());
         }
 
-        std::ptr::copy(&*ta, ta_ptr, sizeof(self.fft_src_buffer));
+        
 
         //self.fft_ta_buffer.write(&*ta);
 
